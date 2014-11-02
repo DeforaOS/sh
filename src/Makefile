@@ -1,4 +1,5 @@
-TARGETS	= sh
+TARGETS	= $(OBJDIR)sh
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 BINDIR	= $(PREFIX)/bin
@@ -16,30 +17,30 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-sh_OBJS = token.o scanner.o parser.o builtin.o job.o sh.o
+sh_OBJS = $(OBJDIR)token.o $(OBJDIR)scanner.o $(OBJDIR)parser.o $(OBJDIR)builtin.o $(OBJDIR)job.o $(OBJDIR)sh.o
 sh_CFLAGS = $(CPPFLAGSF) $(CPPFLAGS) $(CFLAGSF) $(CFLAGS)
 sh_LDFLAGS = $(LDFLAGSF) $(LDFLAGS)
 
-sh: $(sh_OBJS)
-	$(CC) -o sh $(sh_OBJS) $(sh_LDFLAGS)
+$(OBJDIR)sh: $(sh_OBJS)
+	$(CC) -o $(OBJDIR)sh $(sh_OBJS) $(sh_LDFLAGS)
 
-token.o: token.c
-	$(CC) $(sh_CFLAGS) -c token.c
+$(OBJDIR)token.o: token.c
+	$(CC) $(sh_CFLAGS) -o $(OBJDIR)token.o -c token.c
 
-scanner.o: scanner.c
-	$(CC) $(sh_CFLAGS) -c scanner.c
+$(OBJDIR)scanner.o: scanner.c
+	$(CC) $(sh_CFLAGS) -o $(OBJDIR)scanner.o -c scanner.c
 
-parser.o: parser.c
-	$(CC) $(sh_CFLAGS) -c parser.c
+$(OBJDIR)parser.o: parser.c
+	$(CC) $(sh_CFLAGS) -o $(OBJDIR)parser.o -c parser.c
 
-builtin.o: builtin.c
-	$(CC) $(sh_CFLAGS) -c builtin.c
+$(OBJDIR)builtin.o: builtin.c
+	$(CC) $(sh_CFLAGS) -o $(OBJDIR)builtin.o -c builtin.c
 
-job.o: job.c
-	$(CC) $(sh_CFLAGS) -c job.c
+$(OBJDIR)job.o: job.c
+	$(CC) $(sh_CFLAGS) -o $(OBJDIR)job.o -c job.c
 
-sh.o: sh.c
-	$(CC) $(sh_CFLAGS) -c sh.c
+$(OBJDIR)sh.o: sh.c
+	$(CC) $(sh_CFLAGS) -o $(OBJDIR)sh.o -c sh.c
 
 clean:
 	$(RM) -- $(sh_OBJS)
@@ -49,7 +50,7 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 sh $(DESTDIR)$(BINDIR)/sh
+	$(INSTALL) -m 0755 $(OBJDIR)sh $(DESTDIR)$(BINDIR)/sh
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(BINDIR)/sh
