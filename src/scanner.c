@@ -254,15 +254,15 @@ static char * _word_dquote(Scanner * scanner, int * c, char * str,
 		{
 			if((var = _read_variable(scanner, c)) == NULL)
 				return NULL;
-			if((p = realloc(str, (*len)+strlen(var)+1)) == NULL)
+			if((p = realloc(str, (*len) + strlen(var) + 1)) == NULL)
 				return NULL;
 			str = p;
 			strcpy(&str[(*len)], var);
-			(*len)+=strlen(var);
+			(*len) += strlen(var);
 			if(*c == '"')
 				break;
 		}
-		if((p = realloc(str, (*len)+2)) == NULL)
+		if((p = realloc(str, (*len) + 2)) == NULL)
 			return NULL;
 		str = p;
 		str[(*len)++] = *c;
@@ -277,7 +277,7 @@ static char const * _read_variable(Scanner * scanner, int * c)
 	char * p;
 	char delim = '\0';
 
-	for(i = 0; i < sizeof(buf)-1; i++)
+	for(i = 0; i < sizeof(buf) - 1; i++)
 	{
 		*c = scanner->next(scanner);
 		if(i == 0 && *c == '{')
@@ -295,7 +295,7 @@ static char const * _read_variable(Scanner * scanner, int * c)
 			break;
 		buf[i] = *c;
 	}
-	if(i == sizeof(buf)-1)
+	if(i == sizeof(buf) - 1)
 		return NULL;
 	if(i == 0)
 		return "$";
@@ -315,7 +315,7 @@ static char * _word_quote(Scanner * scanner, int * c, char * str,
 	for(*c = scanner->next(scanner); *c != EOF && *c != '\'';
 			*c = scanner->next(scanner))
 	{
-		if((p = realloc(str, (*len)+2)) == NULL)
+		if((p = realloc(str, (*len) + 2)) == NULL)
 			return NULL;
 		str = p;
 		str[(*len)++] = *c;
